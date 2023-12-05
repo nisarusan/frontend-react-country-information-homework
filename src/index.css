@@ -8,5 +8,12 @@ body {
 }
 
 h1, h2, h3 {
+  text-align: center;
   font-family: 'Gochi Hand', cursive;
+}
+
+ul li {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
 }
