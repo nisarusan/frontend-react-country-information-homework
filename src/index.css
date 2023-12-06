@@ -12,8 +12,55 @@ h1, h2, h3 {
   font-family: 'Gochi Hand', cursive;
 }
 
-ul li {
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+
+li {
+  flex-grow: 1;
+  flex-basis: calc(100% / 3);
   display: flex;
   flex-direction: column;
   list-style: none;
+}
+
+
+/* Continents */
+.continent_Antartica {
+  color: blue;
+}
+
+.continent_Asia {
+  color: red;
+}
+
+.continent_Europe {
+  color: orange;
+}
+
+.continent_Oceania {
+  color: purple;
+}
+
+.continent_Africa {
+  color: blue;
+}
+
+.continent_South {
+  color: #01324b;
+}
+
+.continent_North {
+  color: green;
+}
+
+.country {
+  width: 10%;
+}
+
+.country_title {
+  font-size: 1.8rem;
 }
