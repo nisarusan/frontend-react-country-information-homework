@@ -27,13 +27,11 @@ function App() {
         }
     }
 
-
     //mount and useEffect - button not required
     useEffect(() => {
         getInfo();
         setError('');
     }, []);
-
 
     return (
         <>
@@ -56,7 +54,6 @@ function App() {
                     ))}
                 </ul>
             )}
-
         </>
     )
 }

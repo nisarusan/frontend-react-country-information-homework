@@ -6,10 +6,12 @@ function Search() {
   const [countries, setCountries] = useState([]);
   const [error, setError] = useState('');
   const [population, setPopulation] = useState('');
+  const [searchClicked, setSearchClicked] = useState(false);
 
 
   async function getCountry() {
     setError('');
+    setSearchClicked(true);
     try {
       const response = await axios.get('https://restcountries.com/v3.1/all');
       setCountries(response.data);
@@ -23,8 +25,6 @@ function Search() {
     return country.name.common.toLowerCase() === searchInput.toLocaleLowerCase();
   });
 
-
-
   return (
     <>
       <h2>Search country information</h2>
@@ -36,6 +36,9 @@ function Search() {
       <button type="button" onClick={getCountry}>
         Zoek
       </button>
+      {searchClicked && !foundCountry && (
+        <p>This country hasn't been found.</p>
+      )}
 
       {foundCountry && (
         <div>
