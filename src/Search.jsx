@@ -13,8 +13,6 @@ function Search() {
     try {
       const response = await axios.get('https://restcountries.com/v3.1/all');
       setCountries(response.data);
-    
-
     } catch (e) {
       console.error(e);
       setError('Error fetching country data.');
