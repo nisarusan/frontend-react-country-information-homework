@@ -1,57 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import SearchInput from "./component/SearchInput.jsx";
 
 function Search() {
-  const [searchInput, setSearchInput] = useState('');
-  const [countries, setCountries] = useState([]);
-  const [error, setError] = useState('');
-  const [population, setPopulation] = useState('');
-  const [searchClicked, setSearchClicked] = useState(false);
+    const [searchInput, setSearchInput] = useState('');
+    const [countries, setCountries] = useState([]);
+    const [error, setError] = useState('');
+    const [searchClicked, setSearchClicked] = useState(false);
 
 
-  async function getCountry() {
-    setError('');
-    setSearchClicked(true);
-    try {
-      const response = await axios.get('https://restcountries.com/v3.1/all');
-      setCountries(response.data);
-    } catch (e) {
-      console.error(e);
-      setError('Error fetching country data.');
-    }
-  }
+    const getCountry = async () => {
+        setSearchClicked(true);
+        try {
+            const response = await axios.get('https://restcountries.com/v3.1/all');
+            setCountries(response.data);
+        } catch (e) {
+            console.error(e);
+            setError('Error fetching country data.');
+        }
+    };
 
-  const foundCountry = countries.find((country) => {
-    return country.name.common.toLowerCase() === searchInput.toLocaleLowerCase();
-  });
+    useEffect(() => {
+        // Fetch data when component mounts
+        getCountry();
+    }, []); // Empty dependency array ensures it only runs once on mount
 
-  return (
-    <>
-      <h2>Search country information</h2>
-      <input
-        type="text"
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)}
-      />
-      <button type="button" onClick={getCountry}>
-        Zoek
-      </button>
-      {searchClicked && !foundCountry && (
-        <p>This country hasn't been found.</p>
-      )}
+    const foundCountry = countries.find((country) => {
+        return country.name.common.toLowerCase() === searchInput.toLocaleLowerCase();
+    });
 
-      {foundCountry && (
-        <div>
-          <h1><img className="img-wrapper" src={foundCountry.flags.png} /> {foundCountry.name.common}</h1>
-          <p>{foundCountry.name.common} is situated in {foundCountry.subregion} and the capital is {foundCountry.capital}. 
- It has a population of {foundCountry.population.toFixed()} million people and it borders with {foundCountry.borders.length} neighboring countries</p>
-          {/* Add other country information as needed */}
-        </div>
-      )}
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </>
-  );
+    return (
+        <>
+            <SearchInput
+                title="Search country information"
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
+                getCountry={getCountry} // Pass the function as a prop
+                searchClicked={searchClicked}
+                foundCountry={foundCountry}
+                error={error}
+                setError={setError}
+            />
+        </>
+    );
 }
 
 export default Search;
